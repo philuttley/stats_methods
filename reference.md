@@ -19,6 +19,9 @@ See also: [precision](#precision)
 argument
 :   A value given to a python function or program when it runs. In python programming, the term is often used interchangeably (and inconsistently) with 'parameter', but here we restrict the use of the term 'parameter' to probability distributions only.
 
+Bayesian
+:   TBD
+
 Bessel's correction
 :   The correction $$\frac{1}{n-1}$$ (where $$n$$ is sample size) to the arithmetic sum of sample [variance](#variance) so that it becomes an unbiased [estimator](#estimator) of the population variance. The value of 1 subtracted from sample size is called the __degrees of freedom__. The correction compensates for the fact that the part of population variance that leads to variance of the sample mean is already removed from the sample variance, because it is calculated w.r.t. to sample mean and not population mean.
 
@@ -31,14 +34,20 @@ bivariate
 categorical data
 :   A type of data which takes on non-numerical values (e.g. subatomic particle types).
 
+Cauchy-Schwarz inequality
+:   TBD
+
 central limit theorem
 : The theorem states that under general conditions of finite mean and variance, sums of variates drawn from non-normal distributions will tend towards being normally distributed, asymptotically with sample size $$n$$.
 
 cdf
-:   A cumulative distribution function (cdf) gives the cumulative probability that a random variable following a given [probability distribution](#probability-distribution) may be less than or equal to a given value. The cdf is therefore limited to have values over the interval $$[0,1]$$. The derivative function of the cdf is the [pdf](#pdf).
+:   A cumulative distribution function (cdf) gives the cumulative probability that a random variable following a given [probability distribution](#probability-distribution) may be less than or equal to a given value, i.e. the cdf gives $$P(X \leq x)$$. The cdf is therefore limited to have values over the interval $$[0,1]$$. For a continuous random variable, the derivative function of a cdf is the [pdf](#pdf). For a discrete random variable, the cdf is the cumulative sum of the [pmf](#pmf).
+
+conditional probability
+:   If the probability of an event $$A$$ depends on the occurence of another event $$B$$, $$A$$ is said to be conditional on $$B$$. The probability of $$A$$ happening if $$B$$ also happens is denoted $$P(A\vert B)$$, i.e. the probability of '$$A$$ conditional on $$B$$' or of '$$A$$ given $$B$$'. See also: [independence](#independence).
 
 confidence interval
-:  TBD
+:   TBD
 
 confidence level
 :   Often used as an alternative form when stating the [significance level](#significance-level) ($$\alpha$$), it is expressed as 1 minus the significance when quoted as a percentage. E.g. _'the hypothesis is ruled out at the 95% confidence level'_ (for $$\alpha=0.05$$).
@@ -46,23 +55,32 @@ confidence level
 continuous
 :   Relating to a continuous [random variable](#random-variable), i.e. may take on a continuous and infinite number of possible values within a range specified by the corresponding continuous [probability distribution](#probability-distribution).
 
+correlation coefficient
+:   TBD
+
 covariance
 :   TBD
 
 discrete
 :   Relating to a discrete [random variable](#random-variable), i.e. may only take on discrete values (e.g. integers) within a range specified by the corresponding discrete [probability distribution](#probability-distribution).
 
+distributions - Bernoulli
+:   The result of single trial with two outcomes (usually described as 'success' and 'failure', with probability of success $$\theta$$) follows a Bernoulli distribution. If success is defined as $$X=1$$ then a variate distributed as $$X\sim \mathrm{Bern}(\theta)$$ has [pmf](#pmf) $$p(x\vert \theta) = \theta^{x}(1-\theta)^{1-x} \quad \mbox{for }x=0,1$$, with $$E[X]=\theta$$ and $$V[X]=\theta(1-\theta)$$. See also: [binomial distribution](#distributions---binomial).
+
+distributions - binomial
+:   The distribution of number of 'successes' $$x$$ produced by $$n$$ repeated [Bernoulli](#distributions---Bernoulli) trials with probability of success $$\theta$$. $$X\sim \mathrm{Binom}(n,\theta)$$ has [pmf](#pmf) $$p(x\vert n,\theta) = \frac{n!}{(n-x)!x!} \theta^{x}(1-\theta)^{n-x} \quad \mbox{for }x=0,1,2,...,n.$$, with $$E[X]=n\theta$$ and $$V[X]=n\theta(1-\theta)$$.
+
 distributions - chi-squared
 :   TBD
 
 distributions - normal
-:   $$X\sim N(\mu,\sigma)$$ has pdf $$p(x\vert \mu,\sigma)=\frac{1}{\sigma \sqrt{2\pi}} e^{-(x-\mu)^{2}/(2\sigma^{2})}$$, and [location parameter](#parameter) $$\mu$$, [scale parameter](#parameter) $$\sigma$$. Mean $$E[X]=\mu$$ and variance $$V[X]=\sigma^{2}.$$ The limiting distribution of sums of random variables (see: [central limit theorem](#central-limit-theorem)). The __standard normal distribution__ has $$\mu=0$$, $$\sigma^{2}=1$$.
+:   A normally distributed variate $$X\sim N(\mu,\sigma)$$ has pdf $$p(x\vert \mu,\sigma)=\frac{1}{\sigma \sqrt{2\pi}} e^{-(x-\mu)^{2}/(2\sigma^{2})}$$, and [location parameter](#parameter) $$\mu$$, [scale parameter](#parameter) $$\sigma$$. Mean $$E[X]=\mu$$ and variance $$V[X]=\sigma^{2}.$$ The limiting distribution of sums of random variables (see: [central limit theorem](#central-limit-theorem)). The __standard normal distribution__ has $$\mu=0$$, $$\sigma^{2}=1$$.
 
 distributions - Poisson
-:   TBD
+:   The Poisson distribution gives the probability distribution of counts measured in a fixed interval or bin, assuming that the counts are independent follow a constant mean rate of counts/interval $$\lambda$$. For variates $$X\sim \mathrm{Pois}(\lambda)$$, the [pmf](#pmf) $$p(x \vert \lambda) = \frac{\lambda^{x}e^{-\lambda}}{x!}$$, with $$E[X] = \lambda$$ and $$V[X] = \lambda$$. The Poisson distribution can be derived as a limiting case of the [binomial](#binomial) distribution, for an infinite number of trials.
 
 distributions - t
-:   The distribution followed by the [$$t$$-statistic](#t-statistic), corresponding to the distribution obtained by dividing a normally distributed variate by a variate drawn from the square root of a scaled [chi-squared distribution](#distributions---chi-squared), for a given number of degrees of freedom $$\nu$$.
+:   The distribution followed by the [$$t$$-statistic](#t-statistic), corresponding to the distribution of variates equal to $$T=X/Y$$ where $$X$$ is drawn from a standard normal distribution and $$Y$$ is the square root of a variate drawn from a scaled [chi-squared distribution](#distributions---chi-squared), for a given number of degrees of freedom $$\nu$$.
 
 distributions - uniform
 :   $$X\sim U(a,b)$$ has pdf $$p(x\vert a,b)=\mathrm{constant}$$ on interval $$[a,b]$$ (and zero elsewhere), and [location parameter](#parameter) $$a$$, [scale parameter](#parameter) $$\lvert b-a \rvert$$. Mean $$E[X] = (b+a)/2$$ and variance $$V[X] = (b-a)^{2}/12$$. Uniform [random variates](#random-variate) can be used to generate random variates from any other [probability distribution](#probability-distribution) via the [ppf](#ppf) of that distribution.
@@ -75,6 +93,12 @@ event
 
 expectation
 :  The expectation value of a quantity, which may be a [random variable](#random variable) or a function of a random variable, is the integral (over the variable) of the quantity weighted by the [pdf](#pdf) of the variable. In [frequentist](#frequentism) terms, expectation gives the mean of the random variates (or function of them) in the case of an infinite number of measurements.
+
+false negative
+:   TBD
+
+false positive
+:   TBD
 
 frequentism
 :  Interpretation of probability which defines the probability of an event as the limit of its frequency in many independent [trials](#trial).
@@ -89,7 +113,7 @@ hypothesis test
 :   A statistical test, the result of which either rejects a (null) [hypothesis](#hypothesis) to a given significance level (this is also called a [significance test](#significance-test)) or gives a probability that an alternative hypothesis is preferred over the null hypothesis, to explain the data.
 
 independence
-:   Two events are independent if the outcome of one does not affect the probability of the outcome of the other. Formally, if the events $$A$$ and $$B$$ are independent, $$P(A\vert B)=P(A)$$ and $$P(A \mbox{ and } B)=P(A)P(B)$$.
+:   Two events are independent if the outcome of one does not affect the probability of the outcome of the other. Formally, if the events $$A$$ and $$B$$ are independent, $$P(A\vert B)=P(A)$$ and $$P(A \mbox{ and } B)=P(A)P(B)$$. See also [conditional probability](#conditional-probability).
 
 interquartile range
 :   The IQR is a form of [confidence interval](#confidence-interval) corresponding to the range of data values from the 25th to the 75th percentile.
@@ -118,6 +142,9 @@ mode
 multivariate 
 :   Involving three or more [variates](#random-variate), e.g. __multivariate data__ is a type of data consisting of observations/measurements of three variables; __multivariate analysis__ studies the relationships between three or more variables, to see which are related and how.
 
+mutual exclusivity
+:   Two events are mutually exclusive if they cannot both occur, or equivalently the probability of one occurring is conditional on the other __not__ occurring. I.e. events $$A$$ and $$B$$ are mutually exclusive if $$P(A \mbox{ and } B)=0$$ which occurs if $$P(A\vert B)=0$$. For mutually exclusive events, it follows that $$P(A \mbox{ or } B)=P(A)+P(B)$$.
+
 object
 :   A collection of conceptually related python variables ([members](#member)) and functions using those variables ([methods](#method)).
 
@@ -133,6 +160,9 @@ pdf
 percentile
 :   Value of an ordered variable (which may be data) below which a given percentage of the values fall (exclusive definition - inclusive definition corresponds to 'at or below which') . E.g. 25% of values lie below the data value corresponding to the 25th percentile. For a random variable, the percentile corresponds to the value of the variable below which a given percentage of the probability is contained (i.e. it is the value of the variable corresponding to the inverse of the [cdf](#cdf) - or [ppf](#ppf) for the percentage probability expressed as a decimal fraction).
 See also: [quantile](#quantile).
+
+pmf
+:   The probability mass function (pmf) is the discrete equivalent of the [pdf](#pdf), corresponding to the probability of drawing a given integer value from a discrete probability distribution. The sum of pmf values for all possible outcomes from a discrete probability distribution should equal unity. 
 
 population
 :  The notional population of random variates or objects from which a sample is drawn. A population may have some real equivalent (e.g. an actual population of objects which is being sampled). In the [frequentist](#frequentism) approach to statistics it can also represent the notional infinite set of [trials](#trial) from which a [random variable](#random-variable) is drawn.
@@ -168,6 +198,9 @@ rug plot
 sample
 :  A set of measurements, drawn from an underlying population, either real (e.g. the height distribution of Dutch adults) or notional (the distribution of possible measurements from an experiment with some random measurement error). A sample may also refer to a set of random variates drawn from a probability distribution.
 
+sample space
+:   The set of all possible outcomes of an experiment or trial. 
+
 seed
 :   (pseudo-)Random number generators must be 'seeded' using a number, usually an integer, which is usually provided automatically by a system call, but may also be specified by the user. Starting from a given seed, a random number generator will return a fixed sequence of pseudo-random variates, as long as the generating function is called repeatedly without resetting the seed (this behaviour must be forced in Python using `numpy.random.seed`, otherwise a new seed is provided at every function call).
 
@@ -199,6 +232,9 @@ See also [statistical error](#statistical-error), [accuracy](#accuracy)
 
 statistical test
 :   A test of whether a given [test statistic](#test-statistic) is consistent with its distribution under a specified hypothesis (and associated assumptions).
+
+survival function
+:   A function equal to 1 minus the [cdf](#cdf), i.e. it corresponds to the probability $$P(X\gt x)$$ and is therefore useful for assessing [$$p$$-values](#$$p$$-value) of [test statistics](#test-statistic).
 
 test statistic
 :   A [statistic](#statistic) calculated from data for comparison with a known [probability distribution](#probability-distribution) which the test statistic is expected to follow if certain assumptions (including a given hypothesis about the data) are satisfied. 
