@@ -179,7 +179,7 @@ The assumption will also hold (but more weakly) if we can apply the [central lim
 >>     Outputs: prints the observed mean and population parameters, the Z statistic value and p-value'''
 >>     mean = np.mean(data)
 >>     # Calculate the Z statistic zmean
->>     zmean = np.abs((mean-mu)/(np.sqrt(len(data))*sigma))
+>>     zmean = np.abs((mean-mu)*np.sqrt(len(data))/sigma)
 >>     # Calculate the p-value of zmean from the survival function - default distribution is standard normal
 >>     pval = 2*sps.norm.sf(zmean)
 >>     print("Observed mean =",mean," versus population mean",mu,", sigma",sigma)
