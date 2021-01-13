@@ -39,6 +39,11 @@ $$P(A\vert B) = \frac{P(B\vert A) P(A)}{P(B)}$$
 
 Bayes' theorem, named after clergyman Rev. Thomas Bayes who proposed it in the middle of the 18th century, is in its simplest form, a method to swap the conditional dependence of two events, i.e. to obtain the probability of $$A$$ conditional on $$B$$, when you only know the probability of $$B$$ conditional on $$A$$, and the probabilities of $$A$$ and $$B$$ (i.e. each marginalised over the conditional term). 
 
+To show the inclusion of marginalisation, we can generalise from two events to a set of mutually exclusive exhaustive events $$\{A_{1},A_{2},...,A_{n}\}$$:
+
+$$P(A_{i}\vert B) = \frac{P(B\vert A_{i}) P(A_{i})}{P(B)} = \frac{P(B\vert A_{i}) P(A_{i})}{\sum^{n}_{i=1} P(B\vert A_{i}) P(A_{i})}$$
+
+
 > ## Challenge: what kind of binary merger is it?
 > Returning to our hypothetical problem of detecting radio counterparts from gravitational wave events corresponding to binary mergers of binary neutron stars (NN), binary black holes (BB) and neutron star-black hole binaries (NB), recall that the probabilities of radio detection (event denoted with $$D$$) are:
 > 
@@ -81,10 +86,53 @@ Bayes' theorem, named after clergyman Rev. Thomas Bayes who proposed it in the m
 > {: .solution}
 {: .challenge}
 
+## Bayes' theorem for continuous probability distributions
+
+From the multiplication rule for continuous probability distributions, we can obtain the continuous equivalent of Bayes' theorem:
+
+$$p(y\vert x) = \frac{p(x\vert y)p(y)}{p(x)} = \frac{p(x\vert y)p(y)}{\int^{\infty}_{-\infty} p(x\vert y)p(y)\mathrm{d}y}$$
+
+> ## Bayes' billiards game
+> This problem is taken from the useful article [Frequentism and Bayesianism: A Python-driven Primer][vdplas_primer] by Jake VanderPlas, and is there adapted from a problem [discussed by Sean J. Eddy][eddy_bayes].
+>
+> Carol rolls a billiard ball down the table, marking where it stops. Then she starts rolling balls down the table. If the ball lands to the left of the mark, Alice gets a point, to the right and Bob gets a point. First to 6 points wins. After some time, Alice has 5 points and Bob has 3. What is the probability that Bob wins the game ($$P(B)$$)?
+>
+> Defining a success as a roll for Alice (so that she scores a point) and assuming the probability $$p$$ of success does not change with each roll, the relevant distribution is [_binomial_]({{ page.root }}/reference/#distributions---binomial). For Bob to win, he needs the next three rolls to fail (i.e. the points go to him). A simple approach is to estimate $$p$$ using the number of rolls and successes, since the expectation for $$X\sim \mathrm{Binom}(n,p)$$ is $$E[X]=np$$, so taking the number of successes as an unbiased estimator, our estimate for $$p$$, $$\hat{p}=5/8$$. Then the probability of failing for three successive rolls is:
+>
+> $$(1-\hat{p})^{3} \simeq 0.053$$
+>
+> However, this approach does not take into account our uncertainty about Alice's true success rate! 
+>
+> Let's use Bayes' theorem. We want the probability that Bob wins given the data already in hand ($$D$$), i.e. the $$(5,3)$$ scoring. We don't know the value of $$p$$, so we need to consider the marginal probability of $$B$$ with respect to $$p$$:
+>
+> $$P(B\vert D) \equiv \int P(B,p \vert D) \mathrm{d}p$$
+>
+> We can use the multiplication rule $$P(A \mbox{ and } B) = P(A\vert B) P(B)$$, since $$P(B,p \vert D) \equiv P(B \mbox{ and } p \vert D)$$:
+>
+> $$P(B\vert D) = \int P(B\vert p, D) P(p\vert D) \mathrm{d}p$$
+>
+> Now we can calculate $$P(D\vert p)$$ from the binomial distribution, so to get there we use Bayes' theorem:
+>
+> $$P(B\vert D) = \int P(B\vert p, D) \frac{P(D\vert p)P(p)}{P(D)} \mathrm{d}p$$
+>
+> $$= \frac{\int P(B\vert p, D) P(D\vert p)P(p) \mathrm{d}p}{\int P(D\vert p)P(p)\mathrm{d}p}$$
+>
+> where we first take $$P(D)$$ outside the integral (since it has no explicit $$p$$ dependence) and then express it as the marginal probability over $$p$$.  Now:
+> - The term $$P(B\vert p,D)$$ is just the binomial probability of 3 failures for a given $$p$$, i.e. $$P(B\vert p,D) = (1-p)^{3}$$ (conditionality on $$D$$ is implicit, since we know the number of consecutive failures required).
+> - $$P(D\vert p)$$ is just the binomial probability from 5 successes and 3 failures, $$P(D\vert p) \propto p^{5}(1-p)^{3}$$. We ignore the term accounting for permutations and combinations since it is constant for a fixed number of trials and successes, and cancels from the numerator and denominator.
+> - Finally we need to consider the distribution of the chance of a success, $$P(p)$$. This is presumably based on Carol's initial roll and success rate, which we have no prior expectation of, so the simplest assumption is to assume a uniform distribution (i.e. a __uniform prior__): $$P(p)= constant$$, which also cancels from the numerator and denominator.
+>
+> Finally, we solve:
+>
+> $$P(B\vert D) = \frac{\int_{0}^{1} (1-p)^{6}p^{5}}{\int_{0}^{1} (1-p)^{3}p^{5}} \simeq 0.091$$
+>
+> The probability of success for Bob is still low, but has increased compared to our initial, simple estimate. The reason for this is that our choice of prior suggests the possibility that $$\hat{p}$$ overestimated the success rate for Alice, since the median $$\hat{p}$$ suggested by the prior is 0.5, which weights the success rate for Alice down, increasing the chances for Bob.
+{: .callout}
 
 
+[vdplas_primer]: https://arxiv.org/abs/1411.5018
+[eddy_bayes]: https://www.nature.com/articles/nbt0904-1177
 
-
-
+{% include links.md %}
 
 
