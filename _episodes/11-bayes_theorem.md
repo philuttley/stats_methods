@@ -7,8 +7,13 @@ questions:
 - "What is Bayes' theorem and how can we use it to answer scientific questions?"
 objectives:
 - "Learn how Bayes' theorem is derived and how it applies to simple probability problems."
+- "Learn how to derive posterior probability distributions for simple hypotheses, both analytically and using a Monte Carlo approach."
 keypoints:
 - "For conditional probabilities, Bayes' theorem tells us how to swap the conditionals around."
+- "In statistical terminology, the probability distribution of the hypothesis given the data is the _posterior_ and is given by the _likelihood_ multiplied by the _prior_ probability, divided by the _evidence_."
+- "The likelihood is the probability to obtained fixed data as a function of the distribution parameters, in contrast to the pdf which obtains the distribution of data for fixed parameters."
+- "The prior probability represents our prior belief that the hypothesis is correct, before collecting the data"
+- "The evidence is the total probability of obtaining the data, marginalising over viable hypotheses. It is usually the most difficult quantity to calculate unless simplifying assumptions are made."
 ---
 
 <script src="../code/math-code.js"></script>
@@ -129,6 +134,135 @@ $$p(y\vert x) = \frac{p(x\vert y)p(y)}{p(x)} = \frac{p(x\vert y)p(y)}{\int^{\inf
 > The probability of success for Bob is still low, but has increased compared to our initial, simple estimate. The reason for this is that our choice of prior suggests the possibility that $$\hat{p}$$ overestimated the success rate for Alice, since the median $$\hat{p}$$ suggested by the prior is 0.5, which weights the success rate for Alice down, increasing the chances for Bob.
 {: .callout}
 
+<p align='center'>
+<img alt="Bayes anatomy" src="../fig/ep11_bayesanatomy.png" width="600"/>
+</p>
+
+## Bayes' Anatomy
+
+Consider a hypothesis $$H$$ that we want to test with some data $$D$$. The hypothesis may, for example be about the true value of a model parameter or its distribution.
+
+Scientific questions usually revolve around whether we should favour a particular hypothesis, given the data we have in hand. In probabilistic terms we want to know $$P(H\vert D)$$, which is known as the [__posterior probability__]({{ page.root }}/reference/#posterior) or sometimes just 'the posterior'. 
+
+However, you have already seen that the statistical tests we can apply to assess probability work the other way around. We know how to calculate how likely a particular set of data is to occur (e.g. using a test statistic),  given a particular hypothesis (e.g. the value of a population mean) and associated assumptions (e.g. that the data are normally distributed). 
+
+Therefore we usually know $$P(D\vert H)$$, a term which is also called the [__likelihood__]({{ page.root }}/reference/#likelihood) since it refers to the likelihood of obtaining the data (or some statistic calculated from it), given our hypothesis. Note that there is a subtle but important difference between the likelihood and the [pdf]({{ page.root }}/reference/#pdf). The pdf gives the probability distribution of the variate(s) (the data or test statistic) for a given hypothesis and its (fixed) parameters. The likelihood gives the probability for fixed variate(s) as a function of the hypothesis parameters.
+
+We also need the [__prior probability__]({{ page.root }}/reference/#prior) or just 'the prior', $$P(H)$$ which represents our prior knowledge or belief about whether the given hypothesis is likely or not, or what we consider plausible parameter values. The prior is one of the most famous aspects of Bayes' theorem and explicit use of prior probabilities is a key difference between [__Bayesian__]({{ page.root }}/reference/#bayesian)  or [__Frequentist__]({{ page.root }}/reference/#frequentism) approaches to statistics.
+
+Finally, we need to normalise our prior-weighted likelihood by the so-called [__evidence__]({{ page.root }}/reference/#evidence), $$P(D)$$, a term corresponding to the probability of obtaining the given data, regardless of the hypothesis or its parameters. This term can be calculated by marginalising over the possible parameter values and (in principle) whatever viable, alternate hypotheses can account for the data. In practice, unless the situation is simple or very well constrained, this term is the hardest to calculate. For this reason, many calculations of the posterior probability make use of Monte Carlo methods (i.e. simulations with random variates), or assume simplifications that allow $$P(D)$$ to be simplified or cancelled in some way (e.g. uniform priors). The evidence is the same for different hypotheses that explain the same data, so it can also be ignored when comparing the relative probabilities of different hypotheses.
+
+
+> ## Challenge: what is the true GW event rate?
+> In 1 year of monitoring with a hypothetical gravitational wave (GW) detector, you observe 4 GW events from binary neutron stars. Based on this information, you want to calculate the probability distribution of the annual rate of detectable binary neutron star mergers $$\lambda$$.
+>
+> From the Poisson distribution, you can write down the equation for the probability that you detect 4 GW in 1 year given a value for $$\lambda$$. Use this equation with Bayes’ theorem to write an equation for the posterior probability distribution of $$\lambda$$ given the observed rate, $$x$$ and assuming a prior distribution for $$\lambda$$, $$p(\lambda)$$. Then, assuming that the prior distribution is uniform over the interval $$[0,\infty]$$ (since the rate cannot be negative), derive the posterior probability distribution for the observed $$x=4$$. Calculate the expectation for your distribution (i.e. the distribution mean).
+>
+>> ## Hint
+>> You will find this function useful for generating the indefinite integrals you need:
+>> $$\int x^{n} e^{-x}\mathrm{d}x = -e^{-x}\left(\sum\limits_{k=0}^{n} \frac{n!}{k!} x^{k}\right) + \mathrm{constant}$$
+>>
+> {: .solution}
+>
+>> ## Solution
+>> The posterior probability is $$p(\lambda \vert x)$$ - we know $$p(x \vert \lambda)$$ (the Poisson distribution, in this case) and we assume a prior $$p(\lambda)$$, so we can write down Bayes' theorem to find $$p(\lambda \vert x)$$ as follows:\\
+>> $$p(\lambda \vert x) = \frac{p(x \vert \lambda) p(\lambda)}{p(x)} = \frac{p(x \vert \lambda) p(\lambda)}{\int_{0}^{\infty} p(x \vert \lambda) p(\lambda) \mathrm{d}\lambda}$$
+>>
+>> Where we use the law of total probability we can write $$p(x)$$ in terms of the conditional probability and prior (i.e. we integrate the numerator in the equation). For a uniform prior, $$p(\lambda)$$ is a constant, so it can be taken out of the integral and cancels from the top and bottom of the equation: 
+>> $$p(\lambda \vert x) = \frac{p(x \vert \lambda)}{\int_{0}^{\infty} p(x \vert \lambda)\mathrm{d}\lambda}$$
+>>
+>> From the Poisson distribution $$p(x \vert \lambda) = \lambda^{x} \frac{e^{-\lambda}}{x!}$$, so for $$x=4$$ we have $$p(x \vert \lambda) = \lambda^{4} \frac{e^{-\lambda}}{4!}$$. We usually use the Poisson distribution to calculate the [pmf]({{ page.root }}/reference/#pmf) for variable integer counts $$x$$ (this is also forced on us by the function's use of the factorial of $$x$$) and fixed $$\lambda$$. But here we are fixing $$x$$ and looking at the dependence of $$p(x\vert \lambda)$$ on $$\lambda$$, which is a continuous function. In this form, where we fix the random variable, i.e. the data (the value of $$x$$ in this case) and consider instead the distribution parameter(s) as the variable, the distribution is known as a [__likelihood function__]({{ page.root }}/reference/#likelihood-function). 
+>>
+>> So we now have:\\
+>>   $$p(\lambda \vert x) = \frac{\lambda^{4} \exp(-\lambda)/4!}{\int_{0}^{\infty} \left(\lambda^{4} \exp(-\lambda)/4!\right) \mathrm{d}\lambda} = \lambda^{4} \exp(-\lambda)/4!$$
+>> 
+>> since (e.g. using the hint above), $$\int_{0}^{\infty} \left(\lambda^{4} \exp(-\lambda)/4!\right) \mathrm{d}\lambda=4!/4!=1$$. This latter result is not surprising, because it corresponds to the integrated probability over all possible values of $$\lambda$$, but bear in mind that we can only integrate over the likelihood because we were able to divide out the prior probability distribution.
+>>
+>> The mean is given by $$\int_{0}^{\infty} \left(\lambda^{5} \exp(-\lambda)/4!\right) \mathrm{d}\lambda = 5!/4! =5$$.
+> {: .solution}
+{: .challenge}
+
+> ## Intuition builder: simulating the true event rate distribution
+> Now we have seen how to calculate the posterior probability for $$\lambda$$ analytically, let's see how this can be done computationally via the use of scipy's random number generators. Such an approach is known as a _Monte Carlo integration_ of the posterior probability distribution. Besides obtaining the mean, we can also use this approach to obtain the confidence interval on the distribution, that is the range of values of $$\lambda$$ which contain a given amount of the probability. The method is also generally applicable to different, non-uniform priors, for which the analytic calculation approach may not be straightforward, or even possible.
+>
+> The starting point here is the equation for posterior probability:
+>
+> $$p(\lambda \vert x) = \frac{p(x \vert \lambda) p(\lambda)}{p(x)}$$
+>
+> The right hand side contains two probability distributions. By generating random variates from these distributions, we can simulate the posterior distribution simply by counting the values which satisfy our data, i.e. for which $$x=4$$. Here is the procedure:
+> 1. Simulate a large number ($$\geq 10^{6}$$) of possible values of $$\lambda$$, by drawing them from the uniform prior distribution. You don't need to extend the distribution to $$\infty$$, just to large enough $$\lambda$$ that the observed $$x=4$$ becomes extremely unlikely. You should simulate them quickly by generating one large numpy array using the `size` argument of the `rvs` method for the `scipy.stats` distribution.
+> 2. Now use your sample of draws from the prior as input to generate the same number of draws from the `scipy.stats` Poisson probability distribution. I.e. use your array of $$\lambda$$ values drawn from the prior as the input to the argument `mu`, and be sure to set `size` to be equal to the size of your array of $$\lambda$$. This will generate a single Poisson variate for each draw of $$\lambda$$.
+> 3. Now make a new array, selecting only the elements from the $$\lambda$$ array for which the corresponding Poisson variate is equal to 4 (our observed value).
+> 4. The histogram of the new array of $$\lambda$$ values follows the posterior probability distribution for $$\lambda$$. The normalising 'evidence' term $$p(x)$$ is automatically accounted for by plotting the histogram as a density distribution (so the histogram is normalised by the number of $$x=4$$ values). You can also use this array to calculate the mean of the distribution and other statistical quantities, e.g. the standard deviation and the 95% confidence interval (which is centred on the median and contains 0.95 total probability).
+>
+> Now carry out this procedure to obtain a histogram of the posterior probability distribution for $$\lambda$$, the mean of this distribution and the 95% confidence interval.
+>
+>> ## Solution
+>> ~~~
+>> # Set the number of draws to be very large
+>> ntrials = 10000000  
+>> # Set the upper boundary of the uniform prior (lower boundary is zero)
+>> uniform_upper = 20
+>> # Now draw our set of lambda values from the prior
+>> lam_draws = sps.uniform.rvs(loc=0,scale=uniform_upper,size=ntrials)
+>> 
+>> # And use as input to generate Poisson variates each drawn from a distribution with
+>> # one of the drawn lambda values:
+>> poissvars = sps.poisson.rvs(mu=lam_draws, size=ntrials)
+>> 
+>> ## Plot the distribution of Poisson variates drawn for the prior-distributed lambdas
+>> plt.figure()
+>> # These are integers, so use bins in steps of 1 or it may look strange
+>> plt.hist(poissvars,bins=np.arange(0,2*uniform_upper,1.0),density=True,histtype='step')
+>> plt.xlabel('$x$',fontsize=14)
+>> plt.ylabel('Probability density',fontsize=14)
+>> plt.show()
+>> ~~~
+>> {: .language-python}
+>> 
+>> <p align='center'>
+>> <img alt="Simulated x values" src="../fig/ep11_ratesimx.png" width="500"/>
+>> </p>
+>>
+>> The above plot shows the distribution of the $$x$$ values each corresponding to one draw of a Poisson variate with rate $$\lambda$$ drawn from a uniform distribution $$U(0,20)$$. Of these we will only choose those with $$x=4$$ and plot their $$\lambda$$ distribution below.
+>>
+>> ~~~
+>> plt.figure()
+>> ## Here we use the condition poissvars==4 to select only values of lambda which 
+>> ## generated the observed value of x. Then we plot the resulting distribution
+>> plt.hist(lam_draws[poissvars==4],bins=100, density=True,histtype='step')
+>> plt.xlabel('$\lambda$',fontsize=14)
+>> plt.ylabel('Probability density',fontsize=14)
+>> plt.show()
+>> ~~~
+>> {: .language-python}
+>>
+>> <p align='center'>
+>> <img alt="Simulated lambda distribution" src="../fig/ep11_ratesimlam.png" width="500"/>
+>> </p>
+>>
+>> We also calculate the mean, standard deviation and the median and 95% confidence interval around it:
+>> ~~~
+>> print("Mean of lambda = ",np.mean(lam_draws[poissvars==4]))
+>> print("Standard deviation of lambda = ",np.std(lam_draws[poissvars==4],ddof=1))
+>> lower95, median, upper95 = np.percentile(lam_draws[poissvars==4],q=[2.5,50,97.5])
+>> print("The median, and 95% confidence interval is:",median,lower95,"-",upper95)
+>> ~~~
+>> {: .language-python}
+>> ~~~
+>> Mean of lambda =  5.00107665467192
+>> Standard deviation of lambda =  2.2392759435694183
+>> The median, and 95% confidence interval is: 4.667471008241424 1.622514190062071 - 10.252730578626686
+>> ~~~
+>> {: .output}
+>> We can see that the mean is very close to the distribution mean calculated with the analytical approach. The confidence interval tells us that, based on our data and assumed prior, we expect  the true value of lambda to lie in the range $$1.62-10.25$$ with 95% confidence, i.e. there is only a 5% probability that the true value lies outside this range.
+>>
+> {: .solution}
+> For additional challenges: 
+> - You could define a Python function for the cdf of the analytical function for the posterior distribution of $$\lambda$$, for $$x=4$$ and then use it to plot on your simulated distribution the analytical posterior distribution, plotted for comparison as a histogram with the same binning as the simulated version. 
+> - You can also plot the ratio of the simulated histogram to the analytical version, to check it is close to 1 over a broad range of values.  
+> - Finally, see what happens to the posterior distribution of $$\lambda$$ when you change the prior distribution, e.g. to a lognormal distribution with default `loc` and `scale` and `s=1`. (Note that you must choose a prior which does not generate negative values for $$\lambda$$, otherwise the Poisson variates cannot be generated for those values).
+{: .challenge}
 
 [vdplas_primer]: https://arxiv.org/abs/1411.5018
 [eddy_bayes]: https://www.nature.com/articles/nbt0904-1177
