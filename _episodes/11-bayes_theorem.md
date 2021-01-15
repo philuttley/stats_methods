@@ -2,7 +2,7 @@
 title: >-
     Bayes' Theorem
 teaching: 30
-exercises: 10
+exercises: 30
 questions:
 - "What is Bayes' theorem and how can we use it to answer scientific questions?"
 objectives:
@@ -146,7 +146,7 @@ Scientific questions usually revolve around whether we should favour a particula
 
 However, you have already seen that the statistical tests we can apply to assess probability work the other way around. We know how to calculate how likely a particular set of data is to occur (e.g. using a test statistic),  given a particular hypothesis (e.g. the value of a population mean) and associated assumptions (e.g. that the data are normally distributed). 
 
-Therefore we usually know $$P(D\vert H)$$, a term which is also called the [__likelihood__]({{ page.root }}/reference/#likelihood) since it refers to the likelihood of obtaining the data (or some statistic calculated from it), given our hypothesis. Note that there is a subtle but important difference between the likelihood and the [pdf]({{ page.root }}/reference/#pdf). The pdf gives the probability distribution of the variate(s) (the data or test statistic) for a given hypothesis and its (fixed) parameters. The likelihood gives the probability for fixed variate(s) as a function of the hypothesis parameters.
+Therefore we usually know $$P(D\vert H)$$, a term which is called the [__likelihood__]({{ page.root }}/reference/#likelihood) since it refers to the likelihood of obtaining the data (or some statistic calculated from it), given our hypothesis. Note that there is a subtle but important difference between the likelihood and the [pdf]({{ page.root }}/reference/#pdf). The pdf gives the probability distribution of the variate(s) (the data or test statistic) for a given hypothesis and its (fixed) parameters. The likelihood gives the probability for fixed variate(s) as a function of the hypothesis parameters.
 
 We also need the [__prior probability__]({{ page.root }}/reference/#prior) or just 'the prior', $$P(H)$$ which represents our prior knowledge or belief about whether the given hypothesis is likely or not, or what we consider plausible parameter values. The prior is one of the most famous aspects of Bayes' theorem and explicit use of prior probabilities is a key difference between [__Bayesian__]({{ page.root }}/reference/#bayesian)  or [__Frequentist__]({{ page.root }}/reference/#frequentism) approaches to statistics.
 
