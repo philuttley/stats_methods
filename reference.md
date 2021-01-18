@@ -43,6 +43,12 @@ central limit theorem
 cdf
 :   A cumulative distribution function (cdf) gives the cumulative probability that a random variable following a given [probability distribution](#probability-distribution) may be less than or equal to a given value, i.e. the cdf gives $$P(X \leq x)$$. The cdf is therefore limited to have values over the interval $$[0,1]$$. For a continuous random variable, the derivative function of a cdf is the [pdf](#pdf). For a discrete random variable, the cdf is the cumulative sum of the [pmf](#pmf).
 
+chi-squared fitting
+:   See [weighted least squares](#weighted-least-squares)
+
+chi-squared test
+:   TBD
+
 conditional probability
 :   If the probability of an event $$A$$ depends on the occurence of another event $$B$$, $$A$$ is said to be conditional on $$B$$. The probability of $$A$$ happening if $$B$$ also happens is denoted $$P(A\vert B)$$, i.e. the probability of '$$A$$ conditional on $$B$$' or of '$$A$$ given $$B$$'. See also: [independence](#independence).
 
@@ -91,6 +97,9 @@ estimator
 event
 :   In probability theory, an event is an outcome or set of outcomes of a [trial](#trial) to which a probability can be assigned. E.g. an experimental measurement or sample of measurements, a sample of observational data, a dice roll, a 'hand' in a card game, a sequence of computer-generated random numbers or the quantity calculated from them.
 
+evidence
+:   TBD
+
 expectation
 :  The expectation value of a quantity, which may be a [random variable](#random variable) or a function of a random variable, is the integral (over the variable) of the quantity weighted by the [pdf](#pdf) of the variable. In [frequentist](#frequentism) terms, expectation gives the mean of the random variates (or function of them) in the case of an infinite number of measurements.
 
@@ -102,6 +111,9 @@ false positive
 
 frequentism
 :  Interpretation of probability which defines the probability of an event as the limit of its frequency in many independent [trials](#trial).
+
+goodness of fit
+:   TBD
 
 histogram
 :   A method of plotting the distribution of data by binning (assigning data values) in discrete bins and plotting either the number of values or _counts_ (sometimes denoted _frequency_) per bin or normalising by the total bin width to give the _count density_, or further normalising the count density by the total number of counts to give a _probability density_ or sometimes just denoted _density_).
@@ -119,7 +131,10 @@ interquartile range
 :   The IQR is a form of [confidence interval](#confidence-interval) corresponding to the range of data values from the 25th to the 75th percentile.
 
 likelihood
-:   TBD.
+:   TBD
+
+likelihood function
+:   TBD
 
 mean
 :   The mean $$\bar{x}$$ for a quantity $$x_{i}$$ measured from a [sample](#sample) of data is a [statistic](#statistic) calculated as the average of the quantity, i.e. $$\frac{1}{n} \sum\limits_{i=1}^{n} x_{i}$$. For a random variable $$X$$ defined by a [probability distribution](#probability-distribution) with [pdf](#pdf) $$p(x)$$, the mean $$\mu$$ is the expectation value of the variable, $$\mu=E[X]=\int^{+\infty}_{-\infty} xp(x)\mathrm{d}x$$.
@@ -167,12 +182,18 @@ pmf
 population
 :  The notional population of random variates or objects from which a sample is drawn. A population may have some real equivalent (e.g. an actual population of objects which is being sampled). In the [frequentist](#frequentism) approach to statistics it can also represent the notional infinite set of [trials](#trial) from which a [random variable](#random-variable) is drawn.
 
+posterior
+:   TBD
+
 ppf
 :   A percent point function (ppf) gives the value of a variable as a function of the cumulative probability that it corresponds to, i.e. it is the inverse of the [cdf](#cdf).
 
 precision
 :   The relative amount of random deviation in a quantity being measured. Measurements of the same quantity but with smaller [statistical error](#statistical-error) are more precise. 
 See also: [accuracy](#accuracy).
+
+prior
+:   TBD0
 
 probability distribution
 :   Distribution giving the relative frequencies of occurence of a [random variable](#random-variable) (or variables, for [bivariate](#bivariate) and [multivariate](#multivariate) distributions).
@@ -253,6 +274,9 @@ univariate
 
 variance
 :   The variance $$s_{x}^{2}$$ for a quantity $$x_{i}$$ measured from a [sample](#sample) of data, is a [statistic](#statistic) calculated as the average of the squared deviations of the data values from the [sample mean](#mean) (corrected by [Bessel's correction](#Bessel's_correction)), i.e. $$\frac{1}{n-1} \sum\limits_{i=1}^{n} (x_{i}-\bar{x})^{2}$$. For a random variable $$X$$ defined by a [probability distribution](#probability-distribution) with [pdf](#pdf) $$p(x)$$, the variance $$V[X]$$ is the expectation value of the squared difference of the variable from its [mean](#mean) $$\mu$$, $$V[X] = E[(X-\mu)^{2}] = \int^{+\infty}_{-\infty} (x-\mu)^{2}p(x)\mathrm{d}x$$, which is equivalent to the expectation of squares minus the square of expectations of the variable, $$E[X^{2}]-E[X]^{2}$$. 
+
+weighted least squares
+:   TBD
 
 z-statistic
 :   A [test statistic](#test-statistic) which is defined for a [sample mean](#mean) $$\bar{x}$$ with respect to a [population](#population) of known mean $$\mu$$ and [variance](#variance) $$\sigma^{2}$$ as: $$Z = (\bar{x}-\mu)/(\sigma/\sqrt{n})$$. $$Z$$ is drawn from a [standard normal distribution](#distributions---normal) if the sample mean is normally distributed (e.g. via the [central limit theorem](#central-limit-theorem) or if the sample is drawn from a population which is itself normally distributed).
